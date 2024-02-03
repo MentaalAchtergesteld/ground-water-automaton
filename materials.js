@@ -18,4 +18,4 @@ function createMaterial(name, maxSaturation, absorbEfficiency, color) {
 const grass = createMaterial("grass", 75, 0.7, [124, 38, 30]);
 const dirt = createMaterial("dirt", 100, 0.8, [30, 39, 22]);
 const air = createMaterial("air", 0, 1.0, [191, 93, 40]);
-const stone = createMaterial("stone", 25, 0.2, [0, 0, 49]);
+const stone = createMaterial("stone", 3, 0.2, [0, 0, 49]);
