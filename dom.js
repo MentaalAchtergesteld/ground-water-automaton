@@ -1,11 +1,11 @@
-function showCoordinatesInDOM(element) {
+function showCoordinatesInDOM(element, world) {
   element.innerText = `X: ${mouseGridPos.x}, Y: ${
-    gridSize.h - mouseGridPos.y - 1
+    world.size.h - mouseGridPos.y - 1
   } ( ${mouseGridPos.y} )`;
 }
 
-function showSaturationInDOM(element) {
-  let currentTile = getTile(mouseGridPos.x, mouseGridPos.y);
+function showSaturationInDOM(element, world) {
+  let currentTile = world.getTile(mouseGridPos.x, mouseGridPos.y);
 
   let saturation = currentTile == null ? "N/A" : currentTile.saturation;
 

@@ -4,6 +4,9 @@ const viewSpan = document.getElementById("view");
 
 let debug = false;
 
+let world;
+let worldTerrainFunction = basicHillyTerrain;
+
 const cellSize = {
   w: 16,
   h: 16,
@@ -18,27 +21,27 @@ function setup() {
   createCanvas(1024, 512);
   colorMode(HSL, 360, 100, 100);
 
-  gridSize = {
+  const worldSize = {
     w: floor(width / cellSize.w),
     h: floor(height / cellSize.h),
   };
 
-  grid = buildGrid(gridSize.w, gridSize.h, basicHillyTerrain);
+  world = new World(worldSize.w, worldSize.h, worldTerrainFunction);
 }
 
 function draw() {
   background(0, 100, 100);
 
-  mouseGridPos.x = floor(norm(mouseX, 0, width) * gridSize.w);
-  mouseGridPos.y = floor(norm(mouseY, 0, height) * gridSize.h);
+  mouseGridPos.x = floor(norm(mouseX, 0, width) * world.size.w);
+  mouseGridPos.y = floor(norm(mouseY, 0, height) * world.size.h);
 
-  showCoordinatesInDOM(coordinatesSpan);
-  showSaturationInDOM(saturationSpan);
+  showCoordinatesInDOM(coordinatesSpan, world);
+  showSaturationInDOM(saturationSpan, world);
   showCurrentViewNameInDOM(viewSpan);
 
-  simulateGroundWater();
+  simulateGroundWater(world);
 
-  views[currentView](grid);
+  views[currentView](world);
 
-  if (debug) debugView();
+  if (debug) debugView(world);
 }

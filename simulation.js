@@ -3,13 +3,14 @@ const evaporationAmount = 0.01;
 const evaporationChance = 0;
 const minimumSaturationDifferenceToMoveSideways = 0.2;
 
-function evaporate(x, y) {
-  if (random() < evaporationChance) modifySaturation(x, y, -evaporationAmount);
+function evaporate(world, x, y) {
+  if (random() < evaporationChance)
+    world.modifyTileSaturation(x, y, -evaporationAmount);
 }
 
-function moveSaturationDownwards(x, y) {
-  let cell = getTile(x, y);
-  let cellBeneath = getTile(x, y + 1);
+function moveSaturationDownwards(world, x, y) {
+  let cell = world.getTile(x, y);
+  let cellBeneath = world.getTile(x, y + 1);
 
   if (cellBeneath == undefined) return false;
   if (cellBeneath.saturation >= cellBeneath.maxSaturation) return false;
@@ -23,25 +24,25 @@ function moveSaturationDownwards(x, y) {
 
   let movedSaturation = min(maxMovedSaturation, maxMovedSaturationBeneath);
 
-  modifySaturation(x, y, -movedSaturation);
-  modifySaturation(x, y + 1, movedSaturation);
+  world.modifyTileSaturation(x, y, -movedSaturation);
+  world.modifyTileSaturation(x, y + 1, movedSaturation);
 
   return true;
 }
 
-function moveSaturationSideways(x, y) {
-  let cell = getTile(x, y);
+function moveSaturationSideways(world, x, y) {
+  let cell = world.getTile(x, y);
   let neighbourOffset = 0;
 
   if (x == 0) {
     neighbourOffset = 1;
-  } else if (x == gridSize.w - 1) {
+  } else if (x == world.size.w - 1) {
     neighbourOffset = -1;
   } else {
     neighbourOffset = random([-1, 1]);
   }
 
-  let neighbourCell = getTile(x + neighbourOffset, y);
+  let neighbourCell = world.getTile(x + neighbourOffset, y);
 
   if (neighbourCell == undefined) return false;
   if (neighbourCell.saturation >= neighbourCell.maxSaturation) return false;
@@ -71,23 +72,23 @@ function moveSaturationSideways(x, y) {
 
   let movedSaturation = min(maxMovedSaturation, maxNeighbourMovedSaturation);
 
-  modifySaturation(x, y, -movedSaturation);
-  modifySaturation(x + neighbourOffset, y, movedSaturation);
+  world.modifyTileSaturation(x, y, -movedSaturation);
+  world.modifyTileSaturation(x + neighbourOffset, y, movedSaturation);
 
   return true;
 }
 
-function simulateGroundWater() {
-  for (let i = 0; i < gridSize.w; i++) {
-    for (let j = gridSize.h - 1; j >= 0; j--) {
-      if (getTile(i, j).saturation == 0) continue;
+function simulateGroundWater(world) {
+  for (let i = 0; i < world.size.w; i++) {
+    for (let j = world.size.h - 1; j >= 0; j--) {
+      if (world.getTile(i, j).saturation == 0) continue;
 
-      evaporate(i, j);
+      evaporate(world, i, j);
 
-      let moveDownSuccess = moveSaturationDownwards(i, j);
+      let moveDownSuccess = moveSaturationDownwards(world, i, j);
       if (moveDownSuccess) continue;
 
-      moveSaturationSideways(i, j);
+      moveSaturationSideways(world, i, j);
     }
   }
 }

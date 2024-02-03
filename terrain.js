@@ -1,7 +1,5 @@
-// Terrain Functions
-
-function flatTerrain(x, upY, downY) {
-  let groundLevel = gridSize.h / 3;
+function flatTerrain(world, x, upY, downY) {
+  let groundLevel = world.size.h / 3;
 
   if (upY > groundLevel) {
     return air(x, downY);
@@ -14,8 +12,8 @@ function flatTerrain(x, upY, downY) {
   }
 }
 
-function basicHillyTerrain(x, upY, downY) {
-  let baseLevel = gridSize.h / 3;
+function basicHillyTerrain(world, x, upY, downY) {
+  let baseLevel = world.size.h / 3;
   let noiseResolution = 24;
   let noiseMultiplication = 16;
   let groundLevel =

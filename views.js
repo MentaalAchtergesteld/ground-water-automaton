@@ -1,22 +1,22 @@
 let currentView = 1;
 
 let views = [
-  function normalTerrainView(grid) {
+  function normalTerrainView(world) {
     noStroke();
-    for (let i = 0; i < grid.length; i++) {
-      for (let j = 0; j < grid[i].length; j++) {
-        let color = grid[i][j].color;
+    for (let i = 0; i < world.size.w; i++) {
+      for (let j = 0; j < world.size.h; j++) {
+        let color = world.getTile(i, j).color;
         fill(color[0], color[1], color[2]);
         rect(i * cellSize.w, j * cellSize.h, cellSize.w, cellSize.h);
       }
     }
   },
 
-  function saturationLevelView(grid) {
-    for (let i = 0; i < grid.length; i++) {
-      for (let j = 0; j < grid[i].length; j++) {
-        let saturationPercentage =
-          grid[i][j].saturation / grid[i][j].maxSaturation;
+  function saturationLevelView(world) {
+    for (let i = 0; i < world.size.w; i++) {
+      for (let j = 0; j < world.size.h; j++) {
+        let tile = world.getTile(i, j);
+        let saturationPercentage = tile.saturation / tile.maxSaturation;
 
         stroke(209, 96, 56);
         strokeWeight(2);
@@ -31,7 +31,7 @@ let views = [
           cellSize.h * saturationPercentage
         );
 
-        let color = grid[i][j].color;
+        let color = tile.color;
         noStroke();
         fill(color[0], color[1], color[2]);
 
@@ -46,13 +46,13 @@ let views = [
   },
 ];
 
-function debugView() {
+function debugView(world) {
   noFill();
   strokeWeight(1);
   stroke(0, 0, 16);
 
-  for (let i = 0; i < gridSize.w; i++) {
-    for (let j = 0; j < gridSize.h; j++) {
+  for (let i = 0; i < world.size.w; i++) {
+    for (let j = 0; j < world.size.h; j++) {
       rect(i * cellSize.w, j * cellSize.h, cellSize.w, cellSize.h);
     }
   }

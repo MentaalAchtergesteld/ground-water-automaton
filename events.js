@@ -19,14 +19,14 @@ function mousePressed(event) {
     case 0:
       if (
         mouseGridPos.x >= 0 &&
-        mouseGridPos.x < gridSize.w &&
+        mouseGridPos.x < world.size.w &&
         mouseGridPos.y >= 0 &&
-        mouseGridPos.y < gridSize.h
+        mouseGridPos.y < world.size.h
       ) {
-        setSaturation(
+        world.setTileSaturation(
           mouseGridPos.x,
           mouseGridPos.y,
-          grid[mouseGridPos.x][mouseGridPos.y].maxSaturation
+          world.getTile(mouseGridPos.x, mouseGridPos.y).maxSaturation
         );
       }
       break;
