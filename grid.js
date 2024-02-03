@@ -1,3 +1,10 @@
+let gridSize = {
+  w: 0,
+  h: 0,
+};
+
+let grid = [];
+
 function buildGrid(width, height, terrainFunction) {
   const grid = [];
 

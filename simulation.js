@@ -1,6 +1,7 @@
-let saturationMovePerLoop = 1;
-let evaporationAmount = 0.01;
-let evaporationChance = 0;
+const saturationMovePerLoop = 1;
+const evaporationAmount = 0.01;
+const evaporationChance = 0;
+const minimumSaturationDifferenceToMoveSideways = 0.2;
 
 function evaporate(x, y) {
   if (random() < evaporationChance) modifySaturation(x, y, -evaporationAmount);
@@ -49,7 +50,8 @@ function moveSaturationSideways(x, y) {
   let saturationDifference =
     abs(cell.saturation - neighbourCell.saturation) / 2;
 
-  if (saturationDifference < 0.1) return false;
+  if (saturationDifference < minimumSaturationDifferenceToMoveSideways)
+    return false;
 
   let maxMovedSaturation = min(
     min(saturationDifference, saturationMovePerLoop),

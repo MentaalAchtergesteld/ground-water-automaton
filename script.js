@@ -9,13 +9,6 @@ const cellSize = {
   h: 16,
 };
 
-let gridSize = {
-  w: 0,
-  h: 0,
-};
-
-let grid = [];
-
 let mouseGridPos = {
   x: 0,
   y: 0,
