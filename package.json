@@ -1,0 +1,15 @@
+{
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "@types/p5": "^0.9.1",
+    "rollup": "^2.36.2",
+    "typescript": "^4.1.3"
+  },
+  "private": true,
+  "scripts": {
+    "build": "npm run bundle && npm run format:dist",
+    "bundle": "tsc & rollup --config",
+    "preformat:dist": "eslint --fix --no-ignore dist/*.js",
+    "format:dist": "prettier --write dist/*.js"
+  }
+}
