@@ -41,7 +41,8 @@
       ],
       "rules": {
         "no-fallthrough": "off", // already checked by TypeScript
-        "@typescript-eslint/no-explicit-any": "off" // this rule is a little too strict if using p5.js
+        "@typescript-eslint/no-explicit-any": "off", // this rule is a little too strict if using p5.js
+        "@typescript-eslint/no-non-null-assertion": "off" // this rule is a little too strict if using p5.js
       }
     },
 
